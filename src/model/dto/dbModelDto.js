@@ -1,6 +1,7 @@
-export  class Post{
-    constructor(name,category,description,content,author,createdDate,lastUpdate) {
+export class Post{
+    constructor(name,title,category,description,content,author,createdDate,lastUpdate) {
         this.name=name
+        this.title=title
         this.category=category
         this.description=description
         this.content=content

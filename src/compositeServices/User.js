@@ -1,23 +1,33 @@
 import PostService from "../model/service/PostService.js";
 import {Post} from "../model/dto/dbModelDto.js";
-exports.createPost=async (req,reply)=>{
+const createPost=async(req,reply)=>{
     console.log("create apost is called")
-    const post=new Post(req.body.name,
+    const newpost=new Post(req.body.name,
         req.body.category,
         req.body.description,
         req.body.content,
         req.body.author,
         req.body.createdDate,
-        reques.body.lastUpdate
+        req.body.lastUpdate
         )
-    try {
-        let resp= await PostService.addPost(post)
-        reply.send("inseted")
+    const post=PostService.findPostByDetails({name:newpost.name,title:newpost.title})
+    if(post){
+        console.log("throw new error");
+        throw new Error("a post with this name and title is created before")
+        
+    }else{
+        try {
+            let resp= await PostService.addPost(newpost)
+            reply.send("inserted")
+    
+        }catch (err){
+            console.log(err)
+        }
 
-    }catch (err){
-        console.log(err)
     }
+
+    
 
 }
 
-// export default{createPost}
+export default{createPost}
